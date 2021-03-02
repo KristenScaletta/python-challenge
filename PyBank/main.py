@@ -6,8 +6,9 @@ import csv
 
 csvpath = os.path.join('..', 'PyBank/Resources/02-Homework_03-Python_Instructions_PyBank_Resources_budget_data.csv')
 
-#Lists to store data
+#Dictionary to store data
 
+       
 
 
 #Use CSV module to read CSV
@@ -26,32 +27,37 @@ with open(csvpath) as csvfile:
    
     total = 0
     months = 0
-    #i = 0
-    list = []
-      
+    maxincrease = 0 
+    maxdecrease = 0  
+    monthincrease = "a"
+    monthdecrease = "b"
     for row in csvreader:
-        # Count how many months. 
+        #print_info(row)
+        #Count how many months. 
         if len(row[0]) != 0:
             months = months + 1
         
         # Read each row of data after the header and total the second column. Source: https://www.reddit.com/r/learnpython/comments/5djs0i/summing_columns_in_csv_file/
         total += float(row[1])
-    #need to work on this. Doesn't pull min and max.
-        currentcount = row[1]
-        list.append(currentcount)
-        currentcount=0
-        #max = max(list)
-        #if int(row[1]) == int(max):
-         #   maxmonth = row[0]
-   #print(list)
+        # Calculates mininmum decrease and maximim increase.
+        
+        if int(row[1]) > int(maxincrease):
+            maxincrease = int(row[1])
+            monthincrease = str(row[0])
+        if int(row[1]) < int(maxdecrease):
+            maxdecrease = int(row[1])
+            monthdecrease = str(row[0])
+
+        
+        
     
 
-    #outputs the P&L total
+ #outputs the P&L total
     print(f"Financial Analysis")
     print(f"------------------")
     print(f"Total Months: {months}")
     print(f"Total: ${total}")
     print(f"Average Change: ")
-    print(f"Greatest Increase in Profits: (${max(list)})")
-    #print(f"Greatest Decrease in Profits: {maxmonth} ${min(list)}")  
+    print(f"Greatest Increase in Profits: {monthincrease} (${maxincrease})")
+    print(f"Greatest Decrease in Profits: {monthdecrease} ({maxdecrease})")  
        
