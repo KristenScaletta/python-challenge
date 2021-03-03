@@ -6,8 +6,7 @@ import csv
 
 csvpath = os.path.join('..', 'PyPoll/Resources/02-Homework_03-Python_Instructions_PyPoll_Resources_election_data.csv')
 
-#Lists to store data
-candidate_list = []
+
 
 
 
@@ -18,17 +17,21 @@ with open(csvpath) as csvfile:
     # CSV reader specifies delimiter and variable that holds contents
     csvreader = csv.reader(csvfile, delimiter=',')
 
-    print(csvreader)
-
     # Read the header row first 
     csv_header = next(csvreader)
-    print(f"CSV Header: {csv_header}")
 
-   
+    #Lists to store data
+    candidate_list = []
     total_votes = 0
-    candidate_votes = []
-
+    candidate_votes = [0, 0, 0, 0, 0, 0]
+    percent_votes = [0, 0, 0, 0, 0, 0]
+    candidate_number = 0
+    votecount = 0
+    percent = 0
+            
     for row in csvreader:
+        
+
         #counts total number of votes cast
         if len(row[0]) != 0:
             total_votes = total_votes + 1
@@ -36,15 +39,40 @@ with open(csvpath) as csvfile:
         #makes list of all unique candidates.
         candidate_name = row[2]
 
+        
+
         if candidate_name not in candidate_list:
+            
             candidate_list.append(candidate_name)
+
+        #insert vote count in right spot tied to candidate number. Doesn't yet work
+        candidate_number = len(candidate_list)
+    
+
+        candidate_number = int(candidate_number) - 1
+        votecount = int(candidate_votes[candidate_number]) + 1
+        candidate_votes[candidate_number] = votecount 
+        votecount = 0
+        candidate_number = 0
+
+        list_length = int(len(candidate_list)) 
+        
+    
+       
+
+        
+        
+       
         
    
     #Establishes dictionary of candidate name and votes           
+    
+   
     candidate_info = {
              "Name": candidate_list,
-            "Votes": [123, 2334, 23434, 9]
-    }
+            "Votes": candidate_votes,
+            "Percent": percent_votes
+            }
 
     
     #Prints Election Results Header and Total Votes
@@ -54,12 +82,18 @@ with open(csvpath) as csvfile:
     print(f"------------------")
     
     #Prints candidates and individual vote totals
+    
     i = 0
     list_length = int(len(candidate_list)) 
     winner = 0
     while list_length > 0:
-        print(candidate_info["Name"][i])
-        print(candidate_info["Votes"][i])
+       
+        
+        candidate_info["Percent"][i] = candidate_info["Votes"][i]/total_votes * 100
+        
+        print(f"{candidate_info['Name'][i]}: {float(candidate_info['Percent'][i])}% ({candidate_info['Votes'][i]})")
+
+       #determine winner
         if candidate_info["Votes"][i] > winner:
             winner = candidate_info["Votes"][i]
             winner_name = candidate_info["Name"][i]
