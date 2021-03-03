@@ -8,7 +8,7 @@ csvpath = os.path.join('..', 'PyPoll/Resources/02-Homework_03-Python_Instruction
 
 #Lists to store data
 candidate_list = []
-listtoprint = []
+
 
 
 #Use CSV module to read CSV
@@ -26,25 +26,50 @@ with open(csvpath) as csvfile:
 
    
     total_votes = 0
-      
+    candidate_votes = []
+
     for row in csvreader:
         #counts total number of votes cast
         if len(row[0]) != 0:
             total_votes = total_votes + 1
         
-        #makes list of all unique candidates. This doesn't yet work.
-        candidate_list = row[2]
-        candidate = row[2]
-        if candidate not in candidate_list:
-            listtoprint.append(candidate)
-        #append to list only if not already in it.
+        #makes list of all unique candidates.
+        candidate_name = row[2]
 
-    #outputs the P&L total
+        if candidate_name not in candidate_list:
+            candidate_list.append(candidate_name)
+        
+   
+    #Establishes dictionary of candidate name and votes           
+    candidate_info = {
+             "Name": candidate_list,
+            "Votes": [123, 2334, 23434, 9]
+    }
+
+    
+    #Prints Election Results Header and Total Votes
     print(f"Election Results")
     print(f"------------------")
-    print(f"{listtoprint}: ")
     print(f"Total Votes: {total_votes}")
     print(f"------------------")
+    
+    #Prints candidates and individual vote totals
+    i = 0
+    list_length = int(len(candidate_list)) 
+    winner = 0
+    while list_length > 0:
+        print(candidate_info["Name"][i])
+        print(candidate_info["Votes"][i])
+        if candidate_info["Votes"][i] > winner:
+            winner = candidate_info["Votes"][i]
+            winner_name = candidate_info["Name"][i]
+        i = i + 1
+        list_length = list_length - 1
+    
     print(f"------------------")
-    print(f"Winner: ")  
+
+    #Prints winner
+    print(f"Winner: {winner_name}") 
+    print(f"------------------")
+  
        
