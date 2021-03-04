@@ -61,7 +61,7 @@ with open(csvpath) as csvfile:
     print(f"Total: ${round(total)}")
     print(f"Average Change: ${round(avg_change,2)}") 
     print(f"Greatest Increase in Profits: {monthincrease} (${round(maxincrease)})")
-    print(f"Greatest Decrease in Profits: {monthdecrease} ({round(maxdecrease)})")  
+    print(f"Greatest Decrease in Profits: {monthdecrease} (${round(maxdecrease)})")  
        
 #Outputs the requested data in a new text file. Source: https://www.geeksforgeeks.org/reading-writing-text-files-python/
 # Dependencies
@@ -80,4 +80,4 @@ with open(output_path, 'w') as txtfile:
     txtfile.writelines(f"Total: ${round(total)}\n")
     txtfile.writelines(f"Average Change: ${round(avg_change,2)}\n") #Need formula
     txtfile.writelines(f"Greatest Increase in Profits: {monthincrease} (${round(maxincrease)})\n")
-    txtfile.writelines(f"Greatest Decrease in Profits: {monthdecrease} ({round(maxdecrease)})\n")  
+    txtfile.writelines(f"Greatest Decrease in Profits: {monthdecrease} (${round(maxdecrease)})\n")  
