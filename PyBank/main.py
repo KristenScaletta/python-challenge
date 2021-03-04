@@ -23,12 +23,12 @@ with open(csvpath) as csvfile:
     maxdecrease = 0  
     monthincrease = "a"
     monthdecrease = "b"
+    row_list = []
+    avg_change = 0
     
     #Reads each row in the open CSV file
     for row in csvreader:
-        #Count total months if the row is not null. 
-        if len(row[0]) != 0:
-            months = months + 1
+        
         
         #Calculates total. Reads each row of data and totals the second column. Source: https://www.reddit.com/r/learnpython/comments/5djs0i/summing_columns_in_csv_file/
         total += float(row[1])
@@ -42,15 +42,24 @@ with open(csvpath) as csvfile:
             maxdecrease = float(row[1])
             monthdecrease = str(row[0])
 
- #Using variables cacculated, calculates the average change--need formula
-    change = float(total)/float(months)
+        row_list.append(row[1])
  
- #outputs the requested data in a terminal.
+    #calculates total months
+    months = len(row_list)
+    
+    #calculates average change
+    start = row_list[0]
+    end = row_list[months - 1]
+    numerator = float(end) - float(start)
+    avg_change = float(numerator)/float(months)
+
+#outputs the requested data in a terminal.
+    
     print(f"Financial Analysis")
     print(f"------------------")
     print(f"Total Months: {months}")
     print(f"Total: ${total}")
-    print(f"Average Change: {float(change)}") #Need formula
+    print(f"Average Change: {avg_change}") 
     print(f"Greatest Increase in Profits: {monthincrease} (${maxincrease})")
     print(f"Greatest Decrease in Profits: {monthdecrease} ({maxdecrease})")  
        
@@ -69,6 +78,6 @@ with open(output_path, 'w') as txtfile:
     txtfile.writelines(f"------------------\n")
     txtfile.writelines(f"Total Months: {months}\n")
     txtfile.writelines(f"Total: ${total}\n")
-    txtfile.writelines(f"Average Change: {change}\n") #Need formula
+    txtfile.writelines(f"Average Change: {avg_change}\n") #Need formula
     txtfile.writelines(f"Greatest Increase in Profits: {monthincrease} (${maxincrease})\n")
     txtfile.writelines(f"Greatest Decrease in Profits: {monthdecrease} ({maxdecrease})\n")  
