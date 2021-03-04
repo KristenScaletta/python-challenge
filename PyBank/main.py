@@ -29,7 +29,6 @@ with open(csvpath) as csvfile:
     #Reads each row in the open CSV file
     for row in csvreader:
         
-        
         #Calculates total. Reads each row of data and totals the second column. Source: https://www.reddit.com/r/learnpython/comments/5djs0i/summing_columns_in_csv_file/
         total += float(row[1])
         
@@ -42,6 +41,7 @@ with open(csvpath) as csvfile:
             maxdecrease = float(row[1])
             monthdecrease = str(row[0])
 
+        #Creates a list of all changes to calculate number of months and average change
         row_list.append(row[1])
  
     #calculates total months
@@ -58,10 +58,10 @@ with open(csvpath) as csvfile:
     print(f"Financial Analysis")
     print(f"------------------")
     print(f"Total Months: {months}")
-    print(f"Total: ${total}")
-    print(f"Average Change: {avg_change}") 
-    print(f"Greatest Increase in Profits: {monthincrease} (${maxincrease})")
-    print(f"Greatest Decrease in Profits: {monthdecrease} ({maxdecrease})")  
+    print(f"Total: ${round(total)}")
+    print(f"Average Change: ${round(avg_change,2)}") 
+    print(f"Greatest Increase in Profits: {monthincrease} (${round(maxincrease)})")
+    print(f"Greatest Decrease in Profits: {monthdecrease} ({round(maxdecrease)})")  
        
 #Outputs the requested data in a new text file. Source: https://www.geeksforgeeks.org/reading-writing-text-files-python/
 # Dependencies
@@ -77,7 +77,7 @@ with open(output_path, 'w') as txtfile:
     txtfile.writelines(f"Financial Analysis\n")
     txtfile.writelines(f"------------------\n")
     txtfile.writelines(f"Total Months: {months}\n")
-    txtfile.writelines(f"Total: ${total}\n")
-    txtfile.writelines(f"Average Change: {avg_change}\n") #Need formula
-    txtfile.writelines(f"Greatest Increase in Profits: {monthincrease} (${maxincrease})\n")
-    txtfile.writelines(f"Greatest Decrease in Profits: {monthdecrease} ({maxdecrease})\n")  
+    txtfile.writelines(f"Total: ${round(total)}\n")
+    txtfile.writelines(f"Average Change: ${round(avg_change,2)}\n") #Need formula
+    txtfile.writelines(f"Greatest Increase in Profits: {monthincrease} (${round(maxincrease)})\n")
+    txtfile.writelines(f"Greatest Decrease in Profits: {monthdecrease} ({round(maxdecrease)})\n")  
