@@ -1,10 +1,15 @@
 # Import the os module
 import os
 
-# Module for reading CSV files (Note..I could not goet 'Pybank', 'Resources', 'filename' to work on my machine. Advice would be appreciated.)
+# Module for reading CSV files
 import csv
 
-csvpath = os.path.join('..', 'PyBank/Resources/02-Homework_03-Python_Instructions_PyBank_Resources_budget_data.csv')
+csvpath = os.path.join('..', 'PyPoll/Resources/02-Homework_03-Python_Instructions_PyPoll_Resources_election_data.csv')
+
+#Variable and disctionaries to store data
+total_votes = 0
+candidate_dict={}
+candidate_percent_dict = {}
 
 #Use CSV module to read CSV
 
@@ -15,69 +20,60 @@ with open(csvpath) as csvfile:
 
     # Read the header row first 
     csv_header = next(csvreader)
-
-    #Declare variables
-    total = 0
-    months = 0
-    maxincrease = 0 
-    maxdecrease = 0  
-    monthincrease = "a"
-    monthdecrease = "b"
-    row_list = []
-    avg_change = 0
     
-    #Reads each row in the open CSV file
     for row in csvreader:
-        
-        #Calculates total. Reads each row of data and totals the second column. Source: https://www.reddit.com/r/learnpython/comments/5djs0i/summing_columns_in_csv_file/
-        total += float(row[1])
-        
-        # Calculates mininmum decrease and maximim increase.
-        
-        if float(row[1]) > float(maxincrease):
-            maxincrease = float(row[1])
-            monthincrease = str(row[0])
-        if float(row[1]) < float(maxdecrease):
-            maxdecrease = float(row[1])
-            monthdecrease = str(row[0])
-
-        #Creates a list of all changes to calculate number of months and average change
-        row_list.append(row[1])
- 
-    #calculates total months
-    months = len(row_list)
+        #calculates total votes
+        total_votes = total_votes + 1
+        #calculates votes per candidate. Source: Mohammad's assistance.
     
-    #calculates average change
-    start = row_list[0]
-    end = row_list[months - 1]
-    numerator = float(end) - float(start)
-    avg_change = float(numerator)/float(months)
+        candidate = row[2]
+        if candidate in candidate_dict:
+            candidate_dict[candidate] += 1
+        else:
+            candidate_dict[candidate] = 1
+        
+        #calculates percentage of votes per candidate
+        candidate_percent_dict[candidate] = f"{round(candidate_dict[candidate] / total_votes * 100, 2)}"
 
-#outputs the requested data in a terminal.
-    
-    print(f"Financial Analysis")
-    print(f"------------------")
-    print(f"Total Months: {months}")
-    print(f"Total: ${round(total)}")
-    print(f"Average Change: ${round(avg_change,2)}") 
-    print(f"Greatest Increase in Profits: {monthincrease} (${round(maxincrease)})")
-    print(f"Greatest Decrease in Profits: {monthdecrease} (${round(maxdecrease)})")  
-       
+#prints results
+print(f"Election Results")
+print(f"------------------")
+print(f"Total Votes: {total_votes}")
+print(f"------------------")
+winner_votes = 0
+#finds results for each candidate in the dictionaries
+for candidate in candidate_dict and candidate_percent_dict:
+    print(f"{candidate}: {candidate_dict[candidate]}, {candidate_percent_dict[candidate]}%") 
+    #calculates winner
+    if candidate_dict[candidate] > winner_votes:
+        winner_votes = candidate_dict[candidate]
+        winner = candidate
+#prints winner and spaces
+print(f"------------------")
+print(f"The winner is: {winner}")
+print(f"------------------")
+  
 #Outputs the requested data in a new text file. Source: https://www.geeksforgeeks.org/reading-writing-text-files-python/
 # Dependencies
 import os
 
 # Specify the file to write to
-output_path = os.path.join("..", "PyBank/Analysis/pybankanalysis.txt")
+output_path = os.path.join("..", "PyPoll/Analysis/pypollanalysis.txt")
 
 # Open the file using "write" mode. Specify the variable to hold the contents
 with open(output_path, 'w') as txtfile:
 
-#Adds output to the new text file or overwrites file with the below outputs.
-    txtfile.writelines(f"Financial Analysis\n")
+#Adds output to the new text file or overwrites file with the below outputs. Same as print above.
+    txtfile.writelines(f"Election Results\n")
     txtfile.writelines(f"------------------\n")
-    txtfile.writelines(f"Total Months: {months}\n")
-    txtfile.writelines(f"Total: ${round(total)}\n")
-    txtfile.writelines(f"Average Change: ${round(avg_change,2)}\n") #Need formula
-    txtfile.writelines(f"Greatest Increase in Profits: {monthincrease} (${round(maxincrease)})\n")
-    txtfile.writelines(f"Greatest Decrease in Profits: {monthdecrease} (${round(maxdecrease)})\n")  
+    txtfile.writelines(f"Total Votes: {total_votes}\n")
+    txtfile.writelines(f"------------------\n")
+    winner_votes = 0
+    for candidate in candidate_dict and candidate_percent_dict:
+        txtfile.writelines(f"{candidate}: {candidate_dict[candidate]}, {candidate_percent_dict[candidate]}%\n") 
+        if candidate_dict[candidate] > winner_votes:
+            winner_votes = candidate_dict[candidate]
+            winner = candidate
+    txtfile.writelines(f"------------------\n")
+    txtfile.writelines(f"The winner is: {winner}\n")
+    txtfile.writelines(f"------------------\n")
