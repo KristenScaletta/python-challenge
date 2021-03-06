@@ -11,7 +11,6 @@ total_votes = 0
 candidate_dict={}
 candidate_percent_dict = {}
 
-print(dict)
 #Use CSV module to read CSV
 
 with open(csvpath) as csvfile:
