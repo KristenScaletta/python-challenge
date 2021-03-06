@@ -6,7 +6,7 @@ import csv
 
 csvpath = os.path.join('..', 'PyPoll/Resources/02-Homework_03-Python_Instructions_PyPoll_Resources_election_data.csv')
 
-#Variable and disctionaries to store data
+#Variable and dictionaries to store data
 total_votes = 0
 candidate_dict={}
 candidate_percent_dict = {}
