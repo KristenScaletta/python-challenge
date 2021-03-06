@@ -1,3 +1,7 @@
 # python-challenge
 
-Point of clarification. I am taking this course on a work computer under the company name "Amanda Evanston Inc." so when pushing or pulling from the terminal you'll see that business information. Not sure I should be doing it but I don't have an updated personal laptop.
+The contents of this folder execute two different and unrelated sets of code.
+
+Under PyBank, you will find source code (main.py) that performs a variety of calcukations on financial data and can be run in a terminal. It also outputs a text file which I included under Analysis.
+
+Under PyPoll, you will find source code (main.py) that calculates votes per candidate, percent votes and the winner of an election. This can also be run in a terminal and outputs a text file which I included under Anaylsis.
